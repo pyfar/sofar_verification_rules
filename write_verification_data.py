@@ -1,55 +1,11 @@
 # %%
 """Write verification data to SOFA files."""
 import sofar as sf
+from sofar.utils import _complete_sofa
 import os
 import numpy as np
 
 rules, unit_aliases, deprecations = sf.Sofa._verification_rules()
-
-
-def complete_sofa(convention="GeneralTF"):
-    """
-    Generate SOFA file with all required data for testing verification rules.
-    """
-
-    sofa = sf.Sofa(convention)
-    # Listener meta data
-    sofa.add_variable("ListenerView", [1, 0, 0], "double", "IC")
-    sofa.add_attribute("ListenerView_Type", "cartesian")
-    sofa.add_attribute("ListenerView_Units", "metre")
-    sofa.add_variable("ListenerUp", [0, 0, 1], "double", "IC")
-    # Receiver meta data
-    sofa.add_variable("ReceiverView", [1, 0, 0], "double", "IC")
-    sofa.add_attribute("ReceiverView_Type", "cartesian")
-    sofa.add_attribute("ReceiverView_Units", "metre")
-    sofa.add_variable("ReceiverUp", [0, 0, 1], "double", "IC")
-    # Source meta data
-    sofa.add_variable("SourceView", [1, 0, 0], "double", "IC")
-    sofa.add_attribute("SourceView_Type", "cartesian")
-    sofa.add_attribute("SourceView_Units", "metre")
-    sofa.add_variable("SourceUp", [0, 0, 1], "double", "IC")
-    # Emitter meta data
-    sofa.add_variable("EmitterView", [1, 0, 0], "double", "IC")
-    sofa.add_attribute("EmitterView_Type", "cartesian")
-    sofa.add_attribute("EmitterView_Units", "metre")
-    sofa.add_variable("EmitterUp", [0, 0, 1], "double", "IC")
-    # Room meta data
-    sofa.add_attribute("GLOBAL_RoomShortName", "Hall")
-    sofa.add_attribute("GLOBAL_RoomDescription", "Wooden floor")
-    sofa.add_attribute("GLOBAL_RoomLocation", "some where nice")
-    sofa.add_variable("RoomTemperature", 0, "double", "I")
-    sofa.add_attribute("RoomTemperature_Units", "kelvin")
-    sofa.add_attribute("GLOBAL_RoomGeometry", "some/file")
-    sofa.add_variable("RoomVolume", 200, "double", "I")
-    sofa.add_attribute("RoomVolume_Units", "cubic metre")
-    sofa.add_variable("RoomCornerA", [0, 0, 0], "double", "IC")
-    sofa.add_variable("RoomCornerB", [1, 1, 1], "double", "IC")
-    sofa.add_variable("RoomCorners", 0, "double", "I")
-    sofa.add_attribute("RoomCorners_Type", "cartesian")
-    sofa.add_attribute("RoomCorners_Units", "metre")
-
-    sofa.verify()
-    return sofa
 
 
 # -----------------------------------------------------------------------------
@@ -67,7 +23,7 @@ for key in rules:
     key_sf = key.replace(".", "_").replace(":", "_")
     filename = f"{key_sf}=invalid-value.sofa"
     print(filename)
-    sofa = complete_sofa()
+    sofa = _complete_sofa()
 
     # write invalid value
     sofa._protected = False
@@ -102,7 +58,7 @@ for key in rules:
         sub_sf = sub.replace(".", "_").replace(":", "_")
         filename = f"{key_sf}.{sub_sf}=missing.sofa"
         print(filename)
-        sofa = complete_sofa()
+        sofa = _complete_sofa()
 
         # delete conditional dependency
         sofa.delete(sub_sf)
@@ -142,7 +98,7 @@ for key in keys:
                 continue
 
             sub_sf = sub.replace(".", "_").replace(":", "_")
-            sofa = complete_sofa()
+            sofa = _complete_sofa()
 
             # set key to correct value
             sofa._protected = False
