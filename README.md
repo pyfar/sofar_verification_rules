@@ -7,7 +7,7 @@ format*, Audio Engineering Society, New York, NY, USA.
 
 requires the *sofar* package that can be installed via
 
-`pip instal sofar`
+`pip install sofar`
 
 ## Verification data
 
@@ -81,9 +81,9 @@ detailed for unit_aliases.json (see below)
 The rules are contained in a json file with the following structure
 (explanation below, examples refer to rules.json)
 
+```
 {
    key_1: {
-
       "value": values
       "general": [sub_key_1, sub_key_2, ..., sub_key_N],
       "specific": {
@@ -111,16 +111,13 @@ The rules are contained in a json file with the following structure
          value_N: {...}
       }
    },
-
    key_2: {...},
-
    .
    .
    .
-
    key_N: {...}
-
 }
+```
 
 ### KEYS
 
