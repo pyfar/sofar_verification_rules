@@ -53,7 +53,9 @@ folder and explained below.
    colons in the names (they use underscores instead) and require the keyword
    'GLOBAL' to highlight global attributes, e.g., 'GLOBAL_SOFAConventions'.
    The verification of this rule might thus vary across toolboxes.
-5. Some attributes can only have a limited number of entries. Examples for this
+5. Application specific (custom) variables and attributes can not have names
+   that are used by the respective convention.
+6. Some attributes can only have a limited number of entries. Examples for this
    are names of coordinate systems, units, and room types. For instance the
    used coordinate system can only be 'cartesian', 'spherical', or
    'spherical harmonics'. A special case are units, where multiple spellings
@@ -61,7 +63,7 @@ folder and explained below.
    commas, commas plus spaces, or spaces (e.g. 'meter, meter, degree' or
    'meter,meter degree'). All restricted values should be verified insensitive
    of the case, however, units shall be written in lowercase only.
-6. All verification rules from rules.json must be checked (see below)
+7. All verification rules from rules.json must be checked (see below)
 
 The json files inside this folder contain rules for verifying SOFA files.
 The rules were manually extracted from the SOFA Standard AES69-2020. Note that
